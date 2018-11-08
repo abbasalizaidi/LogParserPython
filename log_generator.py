@@ -1,6 +1,8 @@
 import random
-from random import getrandbits
 import datetime
+import configparser
+import io
+from random import getrandbits
 from ipaddress import IPv4Address
 #import pdb; pdb.set_trace()
 
@@ -28,7 +30,9 @@ def write_log_files(num_of_file,num_of_lines):
         file.close()
         num_of_file-=1
 
-
-number_of_file = int(input("Enter the number of files to be created?"))
-number_of_lines = int(input("Enter the number of lines in a file?"))
-write_log_files(number_of_file,number_of_lines)
+file = open("config.ini")
+sample_config = file.read()
+config = configparser.ConfigParser()
+config.read_string(sample_config)
+write_log_files(int(config['log_generator']['num_of_files']),int(config['log_generator']['num_of_lines']))
+file.close()
